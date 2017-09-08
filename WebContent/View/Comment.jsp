@@ -12,7 +12,7 @@
 		var xhttp;
 		var username = document.myform.name.value;
 		var content = document.myform.comment.value;
-		
+		var url="commentController?content="+content"+&username="+username;
 		if (window.XMLHttpRequest)
 			{
 				xhttp = new XMLHttpRequest();
@@ -21,6 +21,14 @@
 			xhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	
+	xhttp.onreadystatechange = function()
+	{
+		var data = xhttp.responseText;
+		document.getElementById("mycomment").innerHTTML = data;
+	}
+	
+	xhttp.open("POST",url,true);
+	xhttp.send();
 	
 	</script>
 	
@@ -38,6 +46,9 @@ username <input type="text" name="username"/>
 <br/>
 <input type="button" value="Post" onclick="Comment()"/>
 </form>
+
+<div id = "mycomment">
+</div>
 
 </body>
 </html>
