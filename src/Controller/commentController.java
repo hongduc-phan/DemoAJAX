@@ -1,11 +1,20 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import BEAN.Comment;
+import DAO.CommentDAO;
+import DB.DBConnection;
 
 /**
  * Servlet implementation class commentController
@@ -34,8 +43,33 @@ public class commentController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		try {
+			// step 1
+			String content = request.getParameter("content");
+			String username = request.getParameter("username");
+			Connection conn = DBConnection.CreateConnection();
+			
+			Comment cmt = new Comment();
+			cmt.setContent(content);
+			cmt.setUsername(username);
+			
+			CommentDAO.InsertComment(conn, cmt);
+			
+			//step 2
+			List <Comment> list = CommentDAO.DisplayComment(conn);
+			request.setAttribute("listComment", list);
+			RequestDispatcher rd = request.getRequestDispatcher("View/DisplayComment.jsp");
+			rd.forward(request, response);
+			conn.close();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }
