@@ -11,8 +11,8 @@
 	function Comment()
 	{
 		var xhttp;
-		var username = document.myform.name.value;
-		var content = document.myform.comment.value;
+		var username = document.myform.username.value;
+		var content = document.myform.content.value;
 		var url="commentController?content="+content+"&username="+username;
 		
 		if (window.XMLHttpRequest)

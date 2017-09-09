@@ -12,7 +12,7 @@ public class CommentDAO {
 	public static void InsertComment(Connection conn,Comment cmt)
 	{
 		PreparedStatement ptmt = null;
-		String sql = "insert into account (uname, pass) values(?,?)";
+		String sql = "insert into comment (username, content) values(?,?)";
 		try {
 			ptmt = conn.prepareStatement(sql);
 			String username= cmt.getUsername();
